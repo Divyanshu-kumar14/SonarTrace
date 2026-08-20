@@ -1,0 +1,5 @@
+module.exports = {
+  extends: ["next/core-web-vitals", "next/typescript"],
+  ignorePatterns: ["node_modules/", ".next/", "coverage/"],
+  rules: {},
+};

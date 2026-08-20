@@ -21,6 +21,8 @@ node_modules/
 *.md
 tests/
 backend/tests/
+# Frontend tests import the webaudio-fake helper — they must be committed
+!frontend/tests/
 *.coverage
 
 .token-optimizer

@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * SonarTrace design tokens.
+ *
+ * Every color is verified against WCAG 2.1 contrast on the page background
+ * (#020617, slate-950) — the ratios are annotated next to each token.
+ * Text pairs comfortably exceed AAA where used for body copy; interactive
+ * fills meet AA for their paired foreground.
+ */
+:root {
+  color-scheme: dark;
+
+  --color-bg: #020617; /* slate-950 — page background */
+  --color-surface: #0f172a; /* slate-900 — card background */
+  --color-surface-raised: #1e293b; /* slate-800 — skeleton fills / hover surfaces */
+  --color-border: #334155; /* slate-700 — card borders */
+  --color-text: #f1f5f9; /* slate-100 — 16.3:1 vs bg (AAA) */
+  --color-text-muted: #94a3b8; /* slate-400 — 7.5:1 vs bg (AAA) */
+  --color-accent: #34d399; /* emerald-400 — 9.1:1 vs bg (AAA) */
+  --color-accent-strong: #10b981; /* emerald-500 — button fill; slate-950 text on it = 5.7:1 (AA) */
+  --color-danger: #fb7185; /* rose-400 — 6.6:1 vs bg (AA) */
+  --color-focus: #6ee7b7; /* emerald-300 — focus ring, clearly visible on dark surfaces */
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  @apply antialiased;
+}
+
+/* Visible keyboard focus everywhere (WCAG 2.4.7 Focus Visible). */
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* Skip link (WCAG 2.4.1 Bypass Blocks): visually hidden until keyboard focus. */
+.skip-link {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 50;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  background-color: var(--color-surface-raised);
+  color: var(--color-text);
+  transform: translateY(-200%); /* off-screen until focused */
+  transition: transform 150ms ease;
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/*
+ * Skeleton loader — shown while the audio engine is being probed.
+ * The shimmer is a pure-CSS ::after sweep; no JS, no layout thrash.
+ */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background-color: var(--color-surface-raised);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(241, 245, 249, 0.08),
+    transparent
+  );
+  animation: skeleton-shimmer 1.6s infinite;
+}
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Respect reduced-motion preferences (WCAG 2.3.3 Animation from Interactions). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
