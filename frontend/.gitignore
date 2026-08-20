@@ -1,0 +1,35 @@
+# dependencies
+/node_modules
+
+# next.js build output
+/.next/
+/out/
+
+# production build
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# env files (keep .env.example as a template)
+.env*
+!.env.example
+
+# typescript incremental build info
+*.tsbuildinfo
+
+# eslint cache
+.eslintcache
+
+# vitest coverage
+/coverage
+
+# vercel
+.vercel
